@@ -8,6 +8,7 @@ import ErrorHandler from "./utils/errorHandler";
 const app = express();
 AppDataSource.initialize()
   .then(async () => {
+    //cors
     app.use(
       cors({
         origin: ORIGIN,
@@ -21,6 +22,7 @@ AppDataSource.initialize()
     app.use(express.urlencoded({ extended: true }));
     //api route
     app.use("/api", apiRoute);
+    //error handler
     app.use((err: ErrorHandler, req: Request, res: Response, next: NextFunction) => {
       res
         .status(err.statusCode || 500)

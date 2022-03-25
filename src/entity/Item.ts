@@ -8,44 +8,54 @@ import {
   JoinColumn,
   ManyToMany,
   JoinTable,
+  Check,
 } from "typeorm";
 
 import { ItemCategory } from "./ItemCategory";
 import { ItemType } from "./ItemType";
 
 @Entity()
+@Check(`"rate" >= 0`)
+@Check(`"s_time" < "e_time"`)
+@Check(`"i_qty" >= 0`)
+@Check(`"a_qty" >= 0`)
+@Check(`"a_qty" <= "i_qty"`)
 export class Item {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({
     nullable: false,
+    unique: true,
   })
   name: string;
+
+  @Column({ nullable: false, default: "" })
+  description: string;
 
   @Column({ nullable: false })
   image: string;
 
-  @Column({ type: "timestamp", nullable: false })
-  s_time: Date;
+  @Column({ type:"time", nullable: false })
+  s_time: number;
 
-  @Column({ type: "timestamp", nullable: false })
-  e_time: Date;
+  @Column({ type: "time", nullable: false })
+  e_time: number;
 
   @Column({ nullable: false, type: "float" })
   rate: number;
 
   @Column({ nullable: false })
-  i_qty: number;
+  ini_qty: number;
 
   @Column({ nullable: false })
-  a_qty: number;
+  avai_qty: number;
 
-  @ManyToMany(()=>ItemType)
+  @ManyToMany(() => ItemType, { cascade: true })
   @JoinTable()
   type: ItemType[];
 
-  @ManyToOne(() => ItemCategory, (itemCategory) => itemCategory.id)
+  @ManyToOne(() => ItemCategory, (itemCategory) => itemCategory.items)
   @JoinColumn()
   category: ItemCategory;
 
