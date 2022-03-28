@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
+import path from "path";
 import cors from "cors";
 import { AppDataSource } from "./data-source";
 import { PORT, ORIGIN } from "./config/app.config";
@@ -20,6 +21,8 @@ AppDataSource.initialize()
     //body parser
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
+    //static route
+    app.use("/static/image", express.static(path.join(__dirname, "../public/uploads")));
     //api route
     app.use("/api", apiRoute);
     //error handler

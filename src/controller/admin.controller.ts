@@ -3,13 +3,11 @@ import {
   AddItemCategoryService,
   AddItemService,
   AddItemTypeService,
-} from "../service/admin.service";
-import { BadRequestError } from "../utils/errorHandler";
+} from "../services/admin.service";
 
 export const AddItemsController = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (req.fileErr) throw new BadRequestError(req.fileErr);
-    await AddItemService(req.body, req.file);
+    await AddItemService(req.body);
     res.json({ message: "food item added successfully" }).status(200);
   } catch (error) {
     next(error);

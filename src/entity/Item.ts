@@ -17,9 +17,9 @@ import { ItemType } from "./ItemType";
 @Entity()
 @Check(`"rate" >= 0`)
 @Check(`"s_time" < "e_time"`)
-@Check(`"i_qty" >= 0`)
-@Check(`"a_qty" >= 0`)
-@Check(`"a_qty" <= "i_qty"`)
+@Check(`"ini_qty" >= 0`)
+@Check(`"avai_qty" >= 0`)
+@Check(`"avai_qty" <= "ini_qty"`)
 export class Item {
   @PrimaryGeneratedColumn()
   id: number;
@@ -33,10 +33,10 @@ export class Item {
   @Column({ nullable: false, default: "" })
   description: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, default: "default.png" })
   image: string;
 
-  @Column({ type:"time", nullable: false })
+  @Column({ type: "time", nullable: false })
   s_time: number;
 
   @Column({ type: "time", nullable: false })
@@ -51,8 +51,11 @@ export class Item {
   @Column({ nullable: false })
   avai_qty: number;
 
+  @Column({ nullable: false,default:false })
+  available: boolean;
+
   @ManyToMany(() => ItemType, { cascade: true })
-  @JoinTable()
+  @JoinTable({name:"item_type_item"})
   type: ItemType[];
 
   @ManyToOne(() => ItemCategory, (itemCategory) => itemCategory.items)
