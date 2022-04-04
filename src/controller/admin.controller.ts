@@ -2,7 +2,8 @@ import { RequestHandler } from "express";
 import {
   AddItemCategoryService,
   AddItemService,
-  AddItemTypeService
+  AddItemTypeService,
+  AddOrganizationService
 } from "../services/admin.service";
 
 export const AddItemsController: RequestHandler = async (req, res, next) => {
@@ -31,3 +32,13 @@ export const AddItemTypeController: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
+
+export const AddOrganizationController: RequestHandler = async (req, res, next) => {
+  try {
+    await AddOrganizationService(req.body);
+    res.json({ message: "organization added successfully", code: 200 }).status(200);
+  } catch (error) {
+    next(error);
+  }
+};
+

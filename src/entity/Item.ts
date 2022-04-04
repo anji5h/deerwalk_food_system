@@ -1,16 +1,15 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
+  Check,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
+  Entity,
   JoinColumn,
-  ManyToMany,
   JoinTable,
-  Check,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
-
 import { ItemCategory } from "./ItemCategory";
 import { ItemType } from "./ItemType";
 
@@ -51,14 +50,17 @@ export class Item {
   @Column({ nullable: false })
   avai_qty: number;
 
-  @Column({ nullable: false,default:false })
+  @Column({ nullable: false, default: false })
   available: boolean;
 
-  @ManyToMany(() => ItemType, { cascade: true })
-  @JoinTable({name:"item_type_item"})
+  @ManyToMany(() => ItemType, { cascade: true, nullable: false })
+  @JoinTable({ name: "item_type_item" })
   type: ItemType[];
 
-  @ManyToOne(() => ItemCategory, (itemCategory) => itemCategory.items)
+  @ManyToOne(() => ItemCategory, (itemCategory) => itemCategory.items, {
+    cascade: true,
+    nullable: false,
+  })
   @JoinColumn()
   category: ItemCategory;
 

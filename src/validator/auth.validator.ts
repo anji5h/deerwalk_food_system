@@ -22,6 +22,11 @@ export const signupValidator = joi.object({
     "string.empty": `"password" cannot be empty"`,
     "string.min": `"password" must be at least 8 characters`,
   }),
+  org_id: joi.number().required().messages({
+    "any.required": `"org_id" is required`,
+    "number.empty": `"org_id" cannot be empty`,
+    "number.base": `"org_id" must be a number`,
+  }),
 });
 
 export const loginValidator = joi.object({

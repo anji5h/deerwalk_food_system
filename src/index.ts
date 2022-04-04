@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import path from "path";
@@ -16,6 +17,8 @@ app.use(
     credentials: true,
   })
 );
+//cookie parser
+app.use(cookieParser());
 //body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

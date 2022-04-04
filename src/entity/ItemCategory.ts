@@ -1,13 +1,9 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  OneToMany,
+  CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn
 } from "typeorm";
-
 import { Item } from "./Item";
+
 
 @Entity()
 export class ItemCategory {

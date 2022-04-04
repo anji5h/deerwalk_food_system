@@ -1,10 +1,12 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from "typeorm";
+import { Organization } from "./Organization";
 
 enum Role {
   ADMIN = "admin",
@@ -17,7 +19,7 @@ export class User {
 
   @Column({
     nullable: false,
-    length:50
+    length: 50,
   })
   name: string;
 
@@ -32,6 +34,9 @@ export class User {
     nullable: false,
   })
   password: string;
+
+  @ManyToOne(() => Organization, (organization) => organization.users, { nullable: true })
+  org: Organization;
 
   @Column({ type: "enum", enum: Role, default: Role.USER })
   role: Role;

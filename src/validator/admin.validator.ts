@@ -8,6 +8,18 @@ export const itemCategoryValidator: Joi.Schema<IAddItemCategoryRequest> = Joi.ob
 
 export const itemTypeValidator: Joi.Schema<IAddItemTypeRequest> = itemCategoryValidator;
 
+export const orgValidator: Joi.Schema<IAddOrganizationRequest> = Joi.object({
+  name: Joi.string().trim().required().lowercase().messages({
+    "any.required": `"name" is required`,
+    "string.empty": `"" cannot be empty`,
+  }),
+  credit: Joi.number().required().messages({
+    "any.required": `"credit" is required`,
+    "number.empty": `"" cannot be empty`,
+    "number.base": `"credit" must be a number`,
+  }),
+});
+
 export const itemValidator: Joi.Schema<IAddItemRequest> = Joi.object({
   name: Joi.string().trim().required().lowercase().messages({
     "any.required": `"food_name" is required`,
