@@ -1,19 +1,5 @@
 import Joi from "joi";
 
-export interface IAddItemCategoryRequest {
-  name: string;
-}
-export interface IAddItemTypeRequest extends IAddItemCategoryRequest {}
-export interface IAddItemRequest extends IAddItemCategoryRequest {
-  category: number;
-  type: number;
-  description?: string;
-  image: string;
-  s_time: Date;
-  e_time: Date;
-  rate: number;
-  ini_qty: number;
-}
 export const itemCategoryValidator: Joi.Schema<IAddItemCategoryRequest> = Joi.object({
   name: Joi.string().trim().required().lowercase().messages({
     "string.empty": `"" cannot be empty`,

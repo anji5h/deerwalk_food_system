@@ -4,13 +4,15 @@
     "lib": ["ES2021"],
     "target": "es2021",
     "module": "commonjs",
+    "strict": true,
     "moduleResolution": "node",
     "outDir": "./dist",
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
     "sourceMap": true,
-    "typeRoots": ["./types"]
+    "typeRoots": ["node_modules/@types","@types/**/*"],
   },
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

@@ -1,12 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { loginValidator, signupValidator } from "../validator/auth.validator";
+import { signupService } from "../services/auth.service";
 
 export const LoginController = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    let data = await loginValidator.validateAsync(req.body, {
-      stripUnknown: true,
-    });
-    res.json({ data }).status(200);
+    
+    res.json({}).status(200);
   } catch (error) {
     next(error);
   }
@@ -14,12 +12,8 @@ export const LoginController = async (req: Request, res: Response, next: NextFun
 
 export const SignupController = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    let data = await signupValidator.validateAsync(req.body, {
-      abortEarly: true,
-      stripUnknown: true,
-    });
-    
-    res.json({ data }).status(200);
+    await signupService(req.body);
+    res.json({message:"user created sucessfully"}).status(200);
   } catch (error) {
     next(error);
   }

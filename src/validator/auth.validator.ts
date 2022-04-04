@@ -7,26 +7,30 @@ export const signupValidator = joi.object({
     .max(50)
     .regex(/^[A-z\s]+$/)
     .messages({
-      "string.empty": "Name cannot be empty",
-      "string.max": "Name cannot be more than 50 characters",
-      "string.pattern.base": "Name must be alphabetic",
+      "any.required": `"name" is required`,
+      "string.empty": `"name" cannot be empty`,
+      "string.max": `"name" cannot be more than 50 characters`,
+      "string.pattern.base": `"name" must be alphabetic`,
     }),
   email: joi.string().email().required().messages({
-    "string.empty": "Email cannot be empty",
-    "string.email": "Email must be a valid email",
+    "any.required": `"email" is required`,
+    "string.empty": `"email" cannot be empty`,
+    "string.email": `"email" must be a valid email"`,
   }),
   password: joi.string().required().min(8).messages({
-    "string.empty": "Password cannot be empty",
-    "string.min": "Password must be at least 8 characters",
+    "any.required": `"password" is required`,
+    "string.empty": `"password" cannot be empty"`,
+    "string.min": `"password" must be at least 8 characters`,
   }),
 });
 
 export const loginValidator = joi.object({
   email: joi.string().email().required().messages({
-    "string.email": "Email is not valid",
-    "string.empty": "Email is required",
+    "any.required": `"email" is required`,
+    "string.empty": `"email" cannot be empty`,
   }),
   password: joi.string().required().messages({
-    "string.empty": "Password is required",
+    "string.empty": `"password" cannot be empty`,
+    "any.required": `"password" is required`,
   }),
 });

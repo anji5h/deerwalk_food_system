@@ -1,11 +1,11 @@
-import { NextFunction, Request, Response } from "express";
+import { RequestHandler } from "express";
 import {
   AddItemCategoryService,
   AddItemService,
-  AddItemTypeService,
+  AddItemTypeService
 } from "../services/admin.service";
 
-export const AddItemsController = async (req: Request, res: Response, next: NextFunction) => {
+export const AddItemsController: RequestHandler = async (req, res, next) => {
   try {
     await AddItemService(req.body);
     res.json({ message: "food item added successfully" }).status(200);
@@ -14,11 +14,7 @@ export const AddItemsController = async (req: Request, res: Response, next: Next
   }
 };
 
-export const AddItemCategoryController = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const AddItemCategoryController: RequestHandler = async (req, res, next) => {
   try {
     await AddItemCategoryService(req.body);
     res.json({ message: "food category added successfully", code: 200 }).status(200);
@@ -27,7 +23,7 @@ export const AddItemCategoryController = async (
   }
 };
 
-export const AddItemTypeController = async (req: Request, res: Response, next: NextFunction) => {
+export const AddItemTypeController: RequestHandler = async (req, res, next) => {
   try {
     await AddItemTypeService(req.body);
     res.json({ message: "food type added successfully", code: 200 }).status(200);
