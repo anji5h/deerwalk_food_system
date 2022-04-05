@@ -1,14 +1,14 @@
 import Joi from "joi";
 
-export const itemCategoryValidator: Joi.Schema<IAddItemCategoryRequest> = Joi.object({
+export const itemCategoryValidator: Joi.Schema<ADMIN_REQ.IAddItemCategoryRequest> = Joi.object({
   name: Joi.string().trim().required().lowercase().messages({
     "string.empty": `"" cannot be empty`,
   }),
 });
 
-export const itemTypeValidator: Joi.Schema<IAddItemTypeRequest> = itemCategoryValidator;
+export const itemTypeValidator: Joi.Schema<ADMIN_REQ.IAddItemTypeRequest> = itemCategoryValidator;
 
-export const orgValidator: Joi.Schema<IAddOrganizationRequest> = Joi.object({
+export const orgValidator: Joi.Schema<ADMIN_REQ.IAddOrganizationRequest> = Joi.object({
   name: Joi.string().trim().required().lowercase().messages({
     "any.required": `"name" is required`,
     "string.empty": `"" cannot be empty`,
@@ -20,7 +20,7 @@ export const orgValidator: Joi.Schema<IAddOrganizationRequest> = Joi.object({
   }),
 });
 
-export const itemValidator: Joi.Schema<IAddItemRequest> = Joi.object({
+export const itemValidator: Joi.Schema<ADMIN_REQ.IAddItemRequest> = Joi.object({
   name: Joi.string().trim().required().lowercase().messages({
     "any.required": `"food_name" is required`,
     "string.empty": `"food_name" cannot be empty`,

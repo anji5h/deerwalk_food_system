@@ -1,6 +1,6 @@
 import joi from "joi";
 
-export const signupValidator = joi.object({
+export const signupValidator = joi.object<AUTH_REQ.ISignupRequest>({
   name: joi
     .string()
     .required()
@@ -29,7 +29,7 @@ export const signupValidator = joi.object({
   }),
 });
 
-export const loginValidator = joi.object({
+export const loginValidator = joi.object<AUTH_REQ.ILoginRequest>({
   email: joi.string().email().required().messages({
     "any.required": `"email" is required`,
     "string.empty": `"email" cannot be empty`,

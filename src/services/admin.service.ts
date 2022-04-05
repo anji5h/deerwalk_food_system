@@ -11,7 +11,7 @@ import {
   orgValidator,
 } from "../validator/admin.validator";
 
-export const AddItemService = async (body: any) => {
+export const AddItemService = async (body: ADMIN_REQ.IAddItemRequest) => {
   let data = await itemValidator.validateAsync(body, { stripUnknown: true });
   let row = await SelectQuery("item")
     .from(Item, "item")
@@ -22,11 +22,11 @@ export const AddItemService = async (body: any) => {
   // await QueryBuilder.insert().into(Item).values(data).execute();
 };
 
-export const AddItemCategoryService = async (body: IAddItemCategoryRequest) => {
+export const AddItemCategoryService = async (body: ADMIN_REQ.IAddItemCategoryRequest) => {
   let data = await itemCategoryValidator.validateAsync(body, {
     stripUnknown: true,
   });
-  let row = await SelectQuery("item_category")
+  let row = await SelectQuery("category")
     .from(ItemCategory, "category")
     .where("category.name = :name", { name: data.name })
     .getOne();
@@ -36,9 +36,9 @@ export const AddItemCategoryService = async (body: IAddItemCategoryRequest) => {
     .execute();
 };
 
-export const AddItemTypeService = async (body: IAddItemTypeRequest) => {
+export const AddItemTypeService = async (body: ADMIN_REQ.IAddItemTypeRequest) => {
   let data = await itemTypeValidator.validateAsync(body, { stripUnknown: true });
-  let row = await SelectQuery("item_type")
+  let row = await SelectQuery("type")
     .from(ItemType, "type")
     .where("type.name = :name", { name: data.name })
     .getOne();
@@ -48,7 +48,7 @@ export const AddItemTypeService = async (body: IAddItemTypeRequest) => {
     .execute();
 };
 
-export const AddOrganizationService = async (body: IAddOrganizationRequest) => {
+export const AddOrganizationService = async (body: ADMIN_REQ.IAddOrganizationRequest) => {
   let data = await orgValidator.validateAsync(body, { stripUnknown: true });
   let row = await SelectQuery("organization")
     .from(Organization, "org")
