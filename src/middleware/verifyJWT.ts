@@ -8,8 +8,7 @@ export const verifyJWT: RequestHandler = async (req, res, next) => {
     if (!token) throw new UnauthorizedError("user unauthorized");
     const { payload } = await verifyToken(token);
     req.user = payload;
-    res.json({payload}).status(200)
-    // next();
+    next();
   } catch (error: any) {
     next(new UnauthorizedError(error.message));
   }
