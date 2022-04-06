@@ -10,12 +10,12 @@ export const itemTypeValidator: Joi.Schema<ADMIN_REQ.IAddItemTypeRequest> = item
 
 export const orgValidator: Joi.Schema<ADMIN_REQ.IAddOrganizationRequest> = Joi.object({
   name: Joi.string().trim().required().lowercase().messages({
-    "any.required": `"name" is required`,
-    "string.empty": `"" cannot be empty`,
+    "any.required": `"org_name" is required`,
+    "string.empty": `"org_name" cannot be empty`,
   }),
   credit: Joi.number().required().messages({
     "any.required": `"credit" is required`,
-    "number.empty": `"" cannot be empty`,
+    "number.empty": `"credit" cannot be empty`,
     "number.base": `"credit" must be a number`,
   }),
 });

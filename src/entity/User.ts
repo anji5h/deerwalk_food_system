@@ -2,13 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
 import { Organization } from "./Organization";
 
-enum Role {
+enum ROLE {
   SUPER_ADMIN = "super_admin",
   ADMIN = "admin",
   USER = "user",
@@ -36,11 +37,15 @@ export class User {
   })
   password: string;
 
-  @ManyToOne(() => Organization, (organization) => organization.users, { nullable: true })
+  @ManyToOne(() => Organization, (organization) => organization.users, { cascade: true })
+  @JoinColumn({ name: "org_id" })
   org: Organization;
 
-  @Column({ type: "enum", enum: Role, default: Role.USER })
-  role: Role;
+  @Column({ type: "int", nullable: true })
+  org_id: number;
+
+  @Column({ type: "enum", enum: ROLE, default: ROLE.USER })
+  role: ROLE;
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   createdAt: Date;

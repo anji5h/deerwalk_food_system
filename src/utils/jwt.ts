@@ -2,6 +2,7 @@ import { JWTPayload, SignJWT, jwtVerify } from "jose";
 import { JWT_SECRET } from "./../config/app.config";
 
 export const signToken = async (payload: JWTPayload) => {
+  console.log(JWT_SECRET)
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()

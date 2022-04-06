@@ -12,19 +12,20 @@ import {
 } from "../validator/admin.validator";
 
 export const AddItemService = async (body: ADMIN_REQ.IAddItemRequest) => {
-  let data = await itemValidator.validateAsync(body, { stripUnknown: true });
+  let data = await itemValidator.validateAsync(body, { stripUnknown: true, abortEarly: false });
   let row = await SelectQuery("item")
     .from(Item, "item")
     .where("item.name = :name", { name: data.name })
     .getOne();
   if (row?.name) throw new BadRequestError("food item already exists");
   console.log(data);
-  // await QueryBuilder.insert().into(Item).values(data).execute();
+  await InsertQuery.into(Item).values(data).execute();
 };
 
 export const AddItemCategoryService = async (body: ADMIN_REQ.IAddItemCategoryRequest) => {
   let data = await itemCategoryValidator.validateAsync(body, {
     stripUnknown: true,
+    abortEarly: false,
   });
   let row = await SelectQuery("category")
     .from(ItemCategory, "category")
@@ -37,7 +38,7 @@ export const AddItemCategoryService = async (body: ADMIN_REQ.IAddItemCategoryReq
 };
 
 export const AddItemTypeService = async (body: ADMIN_REQ.IAddItemTypeRequest) => {
-  let data = await itemTypeValidator.validateAsync(body, { stripUnknown: true });
+  let data = await itemTypeValidator.validateAsync(body, { stripUnknown: true, abortEarly: false });
   let row = await SelectQuery("type")
     .from(ItemType, "type")
     .where("type.name = :name", { name: data.name })
@@ -49,8 +50,8 @@ export const AddItemTypeService = async (body: ADMIN_REQ.IAddItemTypeRequest) =>
 };
 
 export const AddOrganizationService = async (body: ADMIN_REQ.IAddOrganizationRequest) => {
-  let data = await orgValidator.validateAsync(body, { stripUnknown: true });
-  let row = await SelectQuery("organization")
+  let data = await orgValidator.validateAsync(body, { stripUnknown: true, abortEarly: false });
+  let row = await SelectQuery("org")
     .from(Organization, "org")
     .where("org.name = :name", { name: data.name })
     .getOne();

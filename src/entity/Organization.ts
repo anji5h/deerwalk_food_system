@@ -1,10 +1,11 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
+  JoinColumn,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { User } from "./User";
 
@@ -25,7 +26,7 @@ export class Organization {
   })
   credit: number;
 
-  @OneToMany(() => User, (item) => item.org)
+  @OneToMany(() => User, (user) => user.org)
   users: User[];
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
@@ -38,4 +39,3 @@ export class Organization {
   })
   updatedAt: Date;
 }
-

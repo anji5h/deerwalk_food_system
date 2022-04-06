@@ -23,46 +23,55 @@ export class Item {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    nullable: false,
-    unique: true,
-  })
+  @Column({ unique: true })
   name: string;
 
-  @Column({ nullable: false, default: "" })
+  @Column({ nullable: true })
   description: string;
 
-  @Column({ nullable: false, default: "default.png" })
+  @Column({ default: "default.png" })
   image: string;
 
-  @Column({ type: "time", nullable: false })
+  @Column({ type: "time" })
   s_time: number;
 
-  @Column({ type: "time", nullable: false })
+  @Column({ type: "time" })
   e_time: number;
 
-  @Column({ nullable: false, type: "float" })
+  @Column({ type: "float" })
   rate: number;
 
-  @Column({ nullable: false })
+  @Column()
   ini_qty: number;
 
-  @Column({ nullable: false })
+  @Column()
   avai_qty: number;
 
-  @Column({ nullable: false, default: false })
+  @Column({ default: true })
   available: boolean;
 
-  @ManyToMany(() => ItemType, { cascade: true, nullable: false })
-  @JoinTable({ name: "item_type_item" })
+  @ManyToMany(() => ItemType, { cascade: true })
+  @JoinTable({
+    name: "item_type_item",
+    joinColumn: {
+      name: "item_id",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "type_id",
+      referencedColumnName: "id",
+    },
+  })
   type: ItemType[];
 
   @ManyToOne(() => ItemCategory, (itemCategory) => itemCategory.items, {
     cascade: true,
-    nullable: false,
   })
-  @JoinColumn()
+  @JoinColumn({ name: "category_id" })
   category: ItemCategory;
+
+  @Column()
+  category_id: number;
 
   @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
   createdAt: Date;

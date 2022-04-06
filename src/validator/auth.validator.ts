@@ -24,8 +24,13 @@ export const signupValidator = joi.object<AUTH_REQ.ISignupRequest>({
   }),
   org_id: joi.number().required().messages({
     "any.required": `"org_id" is required`,
-    "number.empty": `"org_id" cannot be empty`,
+    "number.empty": `"org_id" cannot be empty"`,
     "number.base": `"org_id" must be a number`,
+  }),
+  role: joi.string().valid("user", "admin").required().messages({
+    "any.required": `"role" is required`,
+    "string.empty": `"role" cannot be empty`,
+    "string.base": `"role" must be either "user" or "admin"`,
   }),
 });
 

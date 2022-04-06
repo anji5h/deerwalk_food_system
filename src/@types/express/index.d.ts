@@ -1,7 +1,7 @@
-import { JWTVerifyResult } from "jose";
+import { JWTPayload } from "jose";
 
 declare module "express-serve-static-core" {
   interface Request {
-    user?: JWTVerifyResult;
+    user?: JWTPayload;
   }
 }

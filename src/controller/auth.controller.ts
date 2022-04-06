@@ -1,26 +1,21 @@
-import { NextFunction, Request, Response } from "express";
+import { RequestHandler } from "express";
 import { loginService, signupService } from "../services/auth.service";
+import { ValidateError } from "../utils/errorHandler";
 
-export const LoginController = async (req: Request, res: Response, next: NextFunction) => {
+export const LoginController: RequestHandler = async (req, res, next) => {
   try {
     let data = await loginService(req.body);
-    res
-      .cookie("token", data, {
-        httpOnly: true,
-        expires: new Date(Date.now() + 86400000),
-      })
-      .json({ message: "Login Successful" })
-      .status(200);
+    res.json({ message: "Login Successful", token: data }).status(200);
   } catch (error) {
-    next(error);
+    next(new ValidateError(error));
   }
 };
 
-export const SignupController = async (req: Request, res: Response, next: NextFunction) => {
+export const SignupController: RequestHandler = async (req, res, next) => {
   try {
     await signupService(req.body);
     res.json({ message: "user created sucessfully" }).status(200);
   } catch (error) {
-    next(error);
+    return next(new ValidateError(error));
   }
 };
