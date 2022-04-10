@@ -6,5 +6,5 @@ export const hashPassword = async (password: string) => {
 };
 
 export const comparePassword = async (password: string, hash: string) => {
-  return await compare(password, hash);
+  return compare(password, hash);
 };

@@ -1,9 +1,8 @@
-import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import path from "path";
 import { ORIGIN, PORT } from "./config/app.config";
-import { AppDataSource } from "./data-source";
+import { prisma } from "./dataSource";
 import apiRoute from "./routes";
 import ErrorHandler from "./utils/errorHandler";
 
@@ -17,8 +16,6 @@ app.use(
     credentials: true,
   })
 );
-//cookie parser
-app.use(cookieParser());
 //body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -28,21 +25,22 @@ app.use("/static/image", express.static(path.join(__dirname, "../public/uploads"
 app.use("/api", apiRoute);
 //error handler
 app.use((err: ErrorHandler, req: Request, res: Response, next: NextFunction) => {
-  res
-    .status(err.statusCode || 500)
-    .json({
-      message: err.message || "Internal Server Error",
-      code: err.statusCode || 500,
-      err: err.err || null,
-    });
+  res.status(err.statusCode || 500).json({
+    message: err.message || "Internal Server Error",
+    code: err.statusCode || 500,
+    err: err.err || null,
+  });
 });
 
-//initialize data source
-AppDataSource.initialize()
-  .then(async ({}) => {
-    //start server
+prisma
+  .$connect()
+  .then(() => {
     app.listen(PORT, () => {
       console.log(`Server started at port ${PORT}`);
+      console.log(`Database connected`);
     });
   })
-  .catch((error) => console.log(error));
+  .catch((err) => {
+    console.log(err);
+    process.exit(0);
+  });

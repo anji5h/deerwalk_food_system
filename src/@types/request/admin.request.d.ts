@@ -8,13 +8,19 @@ declare namespace ADMIN_REQ {
     credit: number;
   }
   interface IAddItemRequest extends IAddItemCategoryRequest {
-    category: number;
-    type: number;
+    category_id: number;
+    type: number[];
     description?: string;
     image: string;
-    s_time: Date;
-    e_time: Date;
+    start_time: number;
+    end_time: number;
     rate: number;
-    ini_qty: number;
+    quantity: number;
+  }
+  interface IAddUserRequest extends IAddItemCategoryRequest {
+    email: string;
+    password: string;
+    org_id: number;
+    role: USER_ENTITIY.ROLE;
   }
 }

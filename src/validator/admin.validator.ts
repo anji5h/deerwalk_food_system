@@ -25,7 +25,7 @@ export const itemValidator: Joi.Schema<ADMIN_REQ.IAddItemRequest> = Joi.object({
     "any.required": `"food_name" is required`,
     "string.empty": `"food_name" cannot be empty`,
   }),
-  category: Joi.number().required().messages({
+  category_id: Joi.number().required().messages({
     "any.required": `"food_category" is required`,
     "number.empty": `"food_category" cannot be empty`,
     "number.base": `"food_category" must be a number`,
@@ -42,19 +42,52 @@ export const itemValidator: Joi.Schema<ADMIN_REQ.IAddItemRequest> = Joi.object({
     "number.base": `"food_rate" must be a number`,
   }),
   description: Joi.string().trim().lowercase(),
-  s_time: Joi.number().required().messages({
+  start_time: Joi.number().required().messages({
     "any.required": `"food_start_time" is required`,
     "number.empty": `"food_start_time" cannot be empty`,
     "number.base": `"food_start_time" must be a number`,
   }),
-  e_time: Joi.number().required().messages({
+  end_time: Joi.number().required().messages({
     "any.required": `"food_end_time" is required`,
     "number.empty": `"food_end_time" cannot be empty`,
     "number.base": `"food_end_time" must be a number`,
   }),
-  ini_qty: Joi.number().required().messages({
+  quantity: Joi.number().required().messages({
     "any.required": `"initial_quantity" is required`,
     "number.empty": `"initial_quantity" cannot be empty`,
     "number.base": `"inital_quantity" must be a number`,
+  }),
+});
+
+export const userValidator = Joi.object<ADMIN_REQ.IAddUserRequest>({
+  name: Joi.string()
+    .required()
+    .max(50)
+    .regex(/^[A-z\s]+$/)
+    .messages({
+      "any.required": `"name" is required`,
+      "string.empty": `"name" cannot be empty`,
+      "string.max": `"name" cannot be more than 50 characters`,
+      "string.pattern.base": `"name" must be alphabetic`,
+    }),
+  email: Joi.string().email().required().messages({
+    "any.required": `"email" is required`,
+    "string.empty": `"email" cannot be empty`,
+    "string.email": `"email" must be a valid email"`,
+  }),
+  password: Joi.string().required().min(8).messages({
+    "any.required": `"password" is required`,
+    "string.empty": `"password" cannot be empty"`,
+    "string.min": `"password" must be at least 8 characters`,
+  }),
+  org_id: Joi.number().required().messages({
+    "any.required": `"org_id" is required`,
+    "number.empty": `"org_id" cannot be empty"`,
+    "number.base": `"org_id" must be a number`,
+  }),
+  role: Joi.string().valid("USER", "CT_ADMIN", "ADMIN").required().messages({
+    "any.required": `"role" is required`,
+    "string.empty": `"role" cannot be empty`,
+    "string.base": `"role" must be either "user" or "admin" or "ct_admin"`,
   }),
 });

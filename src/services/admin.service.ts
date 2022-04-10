@@ -1,25 +1,51 @@
-import { InsertQuery, SelectQuery } from "../data-source";
-import { Item } from "../entity/Item";
-import { ItemCategory } from "../entity/ItemCategory";
-import { ItemType } from "../entity/ItemType";
-import { Organization } from "../entity/Organization";
+import { foodCategoryModel, foodModel, foodTypeModel, orgModel, userModel } from "../dataSource";
 import { BadRequestError } from "../utils/errorHandler";
+import { hashPassword } from "../utils/hash";
 import {
   itemCategoryValidator,
   itemTypeValidator,
   itemValidator,
   orgValidator,
+  userValidator,
 } from "../validator/admin.validator";
 
+export const AddUserService = async (body: ADMIN_REQ.IAddUserRequest) => {
+  let data: ADMIN_REQ.IAddUserRequest = await userValidator.validateAsync(body, {
+    stripUnknown: true,
+    abortEarly: false,
+  });
+  const user = await userModel.findUnique({
+    where: {
+      email: data.email,
+    },
+    select: { email: true },
+  });
+  if (user) throw new BadRequestError("user already exists");
+  await userModel.create({
+    data: {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      role: data.role,
+      org_id: data.org_id,
+    },
+  });
+};
+
 export const AddItemService = async (body: ADMIN_REQ.IAddItemRequest) => {
-  let data = await itemValidator.validateAsync(body, { stripUnknown: true, abortEarly: false });
-  let row = await SelectQuery("item")
-    .from(Item, "item")
-    .where("item.name = :name", { name: data.name })
-    .getOne();
-  if (row?.name) throw new BadRequestError("food item already exists");
-  console.log(data);
-  await InsertQuery.into(Item).values(data).execute();
+  let { type, ...data }: ADMIN_REQ.IAddItemRequest = await itemValidator.validateAsync(body, {
+    stripUnknown: true,
+    abortEarly: false,
+  });
+  let itemRow = await foodModel.findFirst({
+    where: {
+      name: data.name,
+    },
+  });
+  if (itemRow) throw new BadRequestError("food item already exists");
+  await foodModel.create({
+    data: { ...data, start_time: `${data.start_time}:00:00`, end_time: `${data.end_time}:00:00` },
+  });
 };
 
 export const AddItemCategoryService = async (body: ADMIN_REQ.IAddItemCategoryRequest) => {
@@ -27,36 +53,28 @@ export const AddItemCategoryService = async (body: ADMIN_REQ.IAddItemCategoryReq
     stripUnknown: true,
     abortEarly: false,
   });
-  let row = await SelectQuery("category")
-    .from(ItemCategory, "category")
-    .where("category.name = :name", { name: data.name })
-    .getOne();
+  let row = await foodCategoryModel.findUnique({
+    where: {
+      name: data.name,
+    },
+    select: {
+      name: true,
+    },
+  });
   if (row?.name) throw new BadRequestError("food category already exists");
-  await InsertQuery.into(ItemCategory)
-    .values({ ...data })
-    .execute();
+  await foodCategoryModel.create({ data });
 };
 
 export const AddItemTypeService = async (body: ADMIN_REQ.IAddItemTypeRequest) => {
   let data = await itemTypeValidator.validateAsync(body, { stripUnknown: true, abortEarly: false });
-  let row = await SelectQuery("type")
-    .from(ItemType, "type")
-    .where("type.name = :name", { name: data.name })
-    .getOne();
+  let row = await foodTypeModel.findUnique({ where: { name: data.name }, select: { name: true } });
   if (row?.name) throw new BadRequestError("food type already exists");
-  await InsertQuery.into(ItemType)
-    .values({ ...data })
-    .execute();
+  await foodTypeModel.create({ data });
 };
 
 export const AddOrganizationService = async (body: ADMIN_REQ.IAddOrganizationRequest) => {
   let data = await orgValidator.validateAsync(body, { stripUnknown: true, abortEarly: false });
-  let row = await SelectQuery("org")
-    .from(Organization, "org")
-    .where("org.name = :name", { name: data.name })
-    .getOne();
+  let row = await orgModel.findUnique({ where: { name: data.name }, select: { name: true } });
   if (row?.name) throw new BadRequestError("organization already exists");
-  await InsertQuery.into(Organization)
-    .values({ ...data })
-    .execute();
+  await orgModel.create({ data });
 };

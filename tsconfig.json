@@ -11,8 +11,12 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "typeRoots": ["node_modules/@types"]
+  },
+  "ts-node": {
+    "swc": true
   },
   "exclude": ["node_modules"],
-  "include": ["src","public"],
+  "include": ["src", "public"]
 }

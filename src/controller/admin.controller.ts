@@ -4,8 +4,18 @@ import {
   AddItemService,
   AddItemTypeService,
   AddOrganizationService,
+  AddUserService,
 } from "../services/admin.service";
 import { ValidateError } from "../utils/errorHandler";
+
+export const AddUserController: RequestHandler = async (req, res, next) => {
+  try {
+    await AddUserService(req.body);
+    res.json({ message: "user created sucessfully" }).status(200);
+  } catch (error) {
+    return next(new ValidateError(error));
+  }
+};
 
 export const AddItemsController: RequestHandler = async (req, res, next) => {
   try {

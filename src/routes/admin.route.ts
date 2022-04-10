@@ -4,12 +4,23 @@ import {
   AddItemsController,
   AddItemTypeController,
   AddOrganizationController,
+  AddUserController,
 } from "../controller/admin.controller";
+import { verifyCanteenAdmin } from "../middleware/verifyCanteenAdmin";
+import { verifyRole } from "../middleware/verifyRole";
+import { verifySuperAdmin } from "../middleware/verifySuperAdmin";
 
 const router = express.Router();
 
-router.post("/add-item", AddItemsController);
-router.post("/add-item-category", AddItemCategoryController);
-router.post("/add-item-type", AddItemTypeController);
-router.post("/add-organization", AddOrganizationController);
+//add user route
+router.post("/user/create", verifyRole, AddUserController);
+
+//add food info route
+router.post("/item/create", verifyCanteenAdmin, AddItemsController);
+router.post("/item/category/create", verifyCanteenAdmin, AddItemCategoryController);
+router.post("/item/type/create", verifyCanteenAdmin, AddItemTypeController);
+
+//add organization route
+router.post("/organization/create", verifySuperAdmin, AddOrganizationController);
+
 export default router;
