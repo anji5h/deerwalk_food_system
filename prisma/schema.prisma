@@ -17,6 +17,12 @@ enum Role {
   USER
 }
 
+enum OrderStatus {
+  PENDING
+  DELIVERED
+  CANCELLED
+}
+
 model User {
   id         Int          @id @default(autoincrement())
   name       String       @db.VarChar(50)
@@ -28,6 +34,8 @@ model User {
   orders     Order[]
   created_at DateTime     @default(now())
   updated_at DateTime     @updatedAt
+
+  @@map("user")
 }
 
 model Organization {
@@ -37,23 +45,28 @@ model Organization {
   users      User[]
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  @@map("organization")
 }
 
 model Food {
   id             Int              @id @default(autoincrement())
-  name           String           @db.VarChar(50)
-  rate           Int
-  description    String?
+  name           String           @unique @db.VarChar(50)
+  rate           Float            @db.Float()
+  description    String?          @db.VarChar(1000)
   image          String           @default("default.png")
-  start_time     DateTime         @db.Time()
-  end_time       DateTime         @db.Time()
+  start_time     DateTime         @db.Timestamp()
+  end_time       DateTime         @db.Timestamp()
+  is_menu        Boolean          @default(true)
   quantity       Int              @default(0)
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
   food_category  Food_Category    @relation(fields: [category_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   category_id    Int
-  FoodOnFoodType Food_Food_Type[]
+  food_food_type Food_Food_Type[]
   orders         Order[]
+
+  @@map("food")
 }
 
 model Food_Category {
@@ -62,6 +75,8 @@ model Food_Category {
   foods      Food[]
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  @@map("food_category")
 }
 
 model Food_Type {
@@ -69,7 +84,9 @@ model Food_Type {
   name           String           @unique @db.VarChar(50)
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
-  FoodOnFoodType Food_Food_Type[]
+  food_food_type Food_Food_Type[]
+
+  @@map("food_type")
 }
 
 model Food_Food_Type {
@@ -79,15 +96,19 @@ model Food_Food_Type {
   type_id   Int
 
   @@id([food_id, type_id])
+  @@map("food_food_type")
 }
 
 model Order {
-  id         Int      @id @default(autoincrement())
-  user       User     @relation(fields: [user_id], references: [id])
+  id         Int         @id @default(autoincrement())
+  user       User        @relation(fields: [user_id], references: [id])
   user_id    Int
-  food       Food     @relation(fields: [food_id], references: [id])
+  food       Food        @relation(fields: [food_id], references: [id])
   food_id    Int
   quantity   Int
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  status     OrderStatus @default(PENDING)
+  created_at DateTime    @default(now())
+  updated_at DateTime    @updatedAt
+
+  @@map("order")
 }

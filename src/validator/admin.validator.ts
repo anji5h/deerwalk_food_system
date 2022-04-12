@@ -62,6 +62,7 @@ export const itemValidator: Joi.Schema<ADMIN_REQ.IAddItemRequest> = Joi.object({
 export const userValidator = Joi.object<ADMIN_REQ.IAddUserRequest>({
   name: Joi.string()
     .required()
+    .trim()
     .max(50)
     .regex(/^[A-z\s]+$/)
     .messages({

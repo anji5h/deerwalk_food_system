@@ -1,8 +1,8 @@
-import { userModel } from "../dataSource";
-import { BadRequestError } from "../utils/errorHandler";
-import { comparePassword } from "../utils/hash";
-import { signToken } from "../utils/jwt";
-import { loginValidator } from "../validator/auth.validator";
+import { userModel } from "../../dataSource";
+import { BadRequestError } from "../../utils/errorHandler";
+import { comparePassword } from "../../utils/hash";
+import { signToken } from "../../utils/jwt";
+import { loginValidator } from "../../validator/auth.validator";
 
 export const loginService = async (body: AUTH_REQ.ILoginRequest) => {
   let data = await loginValidator.validateAsync(body, {

@@ -43,9 +43,9 @@ function parseErrors(err: ValidationError) {
   return errors;
 }
 export class ValidateError extends ErrorHandler {
-  constructor(err: any) {
+  constructor(err: ErrorHandler) {
     if (err instanceof ValidationError) {
       super("validation error", 400, parseErrors(err));
-    } else super(err.message, 500);
+    } else super(err.message, err.statusCode, err.err);
   }
 }

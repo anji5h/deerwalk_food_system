@@ -5,9 +5,10 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "start": "tsc -p . && node dist/index.js",
+    "start": "NODE_ENV=production tsc -p . && node dist/index.js",
     "db:migrate": "pnpx prisma migrate dev --name init",
     "db:seed": "node dist/seeders/db.seeders",
+    "db:seed:dev": "ts-node src/seeders/db.seeders",
     "debug": "set PORT=4001 && ts-node src/index.ts"
   },
   "keywords": [],
@@ -17,6 +18,7 @@
     "@prisma/client": "^3.12.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.0",
     "dotenv": "^14.3.2",
     "express": "^4.17.3",
     "joi": "^17.6.0",
