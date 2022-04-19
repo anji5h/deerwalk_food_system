@@ -1,9 +1,9 @@
 import express from "express";
-import { AddOrderController } from "../controller/order/order";
+import { AddOrderController, FetchOrderController } from "../controller/order/order";
 const router = express.Router();
 
 router.post("/create", AddOrderController);
-router.post("/delete");
-// router.post("/fetch");
+router.get("/fetch", FetchOrderController);
+// router.post("/delete");
 
 export default router;

@@ -1,9 +1,9 @@
 import { foodTypeModel } from "../../dataSource";
 import { BadRequestError } from "../../utils/errorHandler";
-import { itemTypeValidator } from "../../validator/admin.validator";
+import { foodTypeValidator } from "../../validator/admin/foodType";
 
 export const AddItemTypeService = async (body: ADMIN_REQ.IAddItemTypeRequest) => {
-  let data = await itemTypeValidator.validateAsync(body, { stripUnknown: true, abortEarly: false });
+  let data = await foodTypeValidator.validateAsync(body, { stripUnknown: true, abortEarly: false });
   let row = await foodTypeModel.findUnique({
     where: {
       name: data.name,

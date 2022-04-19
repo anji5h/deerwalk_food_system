@@ -1,23 +1,25 @@
 declare namespace ADMIN_REQ {
-  interface IAddItemCategoryRequest {
+  interface IAddFoodCategoryRequest {
     name: string;
   }
-  interface IAddItemTypeRequest extends IAddItemCategoryRequest {}
+  interface IAddItemTypeRequest extends IAddFoodCategoryRequest {}
 
-  interface IAddOrganizationRequest extends IAddItemCategoryRequest {
+  interface IAddOrganizationRequest extends IAddFoodCategoryRequest {
     credit: number;
   }
-  interface IAddItemRequest extends IAddItemCategoryRequest {
+  interface IAddFoodRequest extends IAddFoodCategoryRequest {
     category_id: number;
     type: number[];
     description?: string;
     image: string;
-    start_time: number;
-    end_time: number;
+    start_hour: number;
+    start_min: number;
+    end_hour: number;
+    end_min: number;
     rate: number;
     quantity: number;
   }
-  interface IAddUserRequest extends IAddItemCategoryRequest {
+  interface IAddUserRequest extends IAddFoodCategoryRequest {
     email: string;
     password: string;
     org_id: number;

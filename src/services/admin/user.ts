@@ -1,6 +1,6 @@
 import { userModel } from "../../dataSource";
 import { BadRequestError } from "../../utils/errorHandler";
-import { userValidator } from "../../validator/admin.validator";
+import { userValidator } from "../../validator/admin/user";
 
 export const AddUserService = async (body: ADMIN_REQ.IAddUserRequest) => {
   let data: ADMIN_REQ.IAddUserRequest = await userValidator.validateAsync(body, {

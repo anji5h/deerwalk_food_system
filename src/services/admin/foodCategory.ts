@@ -1,9 +1,9 @@
 import { foodCategoryModel } from "../../dataSource";
 import { BadRequestError } from "../../utils/errorHandler";
-import { itemCategoryValidator } from "../../validator/admin.validator";
+import { foodCategoryValidator } from "../../validator/admin/foodCategory";
 
-export const AddItemCategoryService = async (body: ADMIN_REQ.IAddItemCategoryRequest) => {
-  let data = await itemCategoryValidator.validateAsync(body, {
+export const AddItemCategoryService = async (body: ADMIN_REQ.IAddFoodCategoryRequest) => {
+  let data = await foodCategoryValidator.validateAsync(body, {
     stripUnknown: true,
     abortEarly: false,
   });

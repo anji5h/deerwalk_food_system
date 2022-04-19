@@ -1,6 +1,18 @@
 import { RequestHandler } from "express";
-import { AddOrderService } from "../../services/order/order";
+import { AddOrderService, FetchOrderService } from "../../services/order/order";
 import { ValidateError } from "../../utils/errorHandler";
+
+export const FetchOrderController: RequestHandler = async (req, res, next) => {
+  try {
+    const order = await FetchOrderService(req.user.id);
+    res.status(200).json({
+      status: "success",
+      data: order,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const AddOrderController: RequestHandler = async (req, res, next) => {
   try {

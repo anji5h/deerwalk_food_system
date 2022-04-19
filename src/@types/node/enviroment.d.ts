@@ -9,6 +9,7 @@ declare namespace NodeJS {
     SP_ADMIN_NAME: T;
     SP_ADMIN_PASSWORD: T;
     SP_ADMIN_EMAIL: T;
+    ORDER_DATE: T
   }
 
   interface ProcessEnv extends EnvType<string> {}
