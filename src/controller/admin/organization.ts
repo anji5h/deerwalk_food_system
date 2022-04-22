@@ -6,7 +6,7 @@ export const AddOrganizationController: RequestHandler = async (req, res, next) 
   try {
     await AddOrganizationService(req.body);
     res.json({ message: "organization added successfully", code: 200 }).status(200);
-  } catch (err) {
+  } catch (err:any) {
     next(new ValidateError(err));
   }
 };

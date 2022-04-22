@@ -4,10 +4,10 @@ import { ValidateError } from "../../utils/errorHandler";
 
 export const FetchOrderController: RequestHandler = async (req, res, next) => {
   try {
-    const order = await FetchOrderService(req.user.id);
+    const orders = await FetchOrderService(req.user.id);
     res.status(200).json({
       status: "success",
-      data: order,
+      orders,
     });
   } catch (error) {
     next(error);

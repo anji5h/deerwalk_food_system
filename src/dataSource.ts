@@ -18,7 +18,6 @@ prisma.$use(async (params, next) => {
   }
   return next(params);
 });
-
 //db model
 export const userModel = prisma.user;
 export const orgModel = prisma.organization;

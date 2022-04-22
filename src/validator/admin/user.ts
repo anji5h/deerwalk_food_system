@@ -27,4 +27,9 @@ export const userValidator = Joi.object<ADMIN_REQ.IAddUserRequest>({
     "string.empty": `"role" cannot be empty`,
     "string.base": `"role" must be either "USER" or "ADMIN" or "CT_ADMIN"`,
   }),
+  org_id: Joi.number().required().messages({
+    "any.required": `"org_id" is required`,
+    "number.empty": `"org_id" cannot be empty`,
+    "number.base": `"org_id" must be a number`,
+  }),
 });

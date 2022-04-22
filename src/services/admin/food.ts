@@ -3,7 +3,7 @@ import { BadRequestError } from "../../utils/errorHandler";
 import { setTime } from "../../utils/formatTime";
 import { foodValidator } from "../../validator/admin/food";
 
-export const FetchFoodService = async () => {
+export const FetchFoodService = async (params?: number) => {
   let data = await foodCategoryModel.findMany({
     select: {
       id: true,
@@ -14,7 +14,7 @@ export const FetchFoodService = async () => {
           food_food_type: {
             some: {
               food_type: {
-                id: undefined,
+                id: params || undefined,
               },
             },
           },

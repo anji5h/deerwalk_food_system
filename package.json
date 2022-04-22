@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "start": "NODE_ENV=production tsc -p . && node dist/index.js",
+    "start": "set NODE_ENV=production && tsc -p tsconfig.prod.json  && node dist/index.js",
     "db:migrate": "pnpx prisma migrate dev --name init",
     "db:seed": "node dist/seeders/db.seeders",
     "db:seed:dev": "ts-node src/seeders/db.seeders",

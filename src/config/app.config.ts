@@ -7,10 +7,13 @@ config();
     "PORT",
     "ORIGIN",
     "DATABASE_URL",
-    "JWT_SECRET",
     "SP_ADMIN_NAME",
     "SP_ADMIN_PASSWORD",
     "SP_ADMIN_EMAIL",
+    "REFRESH_TOKEN_SECRET",
+    "ACCESS_TOKEN_SECRET",
+    "REFRESH_TOKEN_EXPIRES_IN",
+    "ACCESS_TOKEN_EXPIRES_IN",
   ];
 
   required.forEach((key) => {
@@ -22,7 +25,13 @@ config();
 
 export const PORT = parseInt(process.env.PORT);
 export const ORIGIN = process.env.ORIGIN || "*";
-export const JWT_SECRET = new Uint8Array(Buffer.from(process.env.JWT_SECRET));
+
+export const DATABASE_URL = process.env.DATABASE_URL;
+
+export const REFRESH_TOKEN_SECRET = new Uint8Array(Buffer.from(process.env.REFRESH_TOKEN_SECRET));
+export const ACCESS_TOKEN_SECRET = new Uint8Array(Buffer.from(process.env.ACCESS_TOKEN_SECRET));
+export const REFRESH_TOKEN_EXPIRES_IN = parseInt(process.env.REFRESH_TOKEN_EXPIRES_IN);
+export const ACCESS_TOKEN_EXPIRES_IN = parseInt(process.env.ACCESS_TOKEN_EXPIRES_IN);
 
 export const ORDER_DATE = process.env.ORDER_DATE || "2022/04/01";
 

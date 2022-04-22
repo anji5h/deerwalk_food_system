@@ -6,7 +6,7 @@ export const AddUserController: RequestHandler = async (req, res, next) => {
   try {
     await AddUserService(req.body);
     res.json({ message: "user created sucessfully" }).status(200);
-  } catch (error) {
-    return next(new ValidateError(error));
+  } catch (err:any) {
+    return next(new ValidateError(err));
   }
 };
