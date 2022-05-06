@@ -10,10 +10,8 @@ config();
     "SP_ADMIN_NAME",
     "SP_ADMIN_PASSWORD",
     "SP_ADMIN_EMAIL",
-    "REFRESH_TOKEN_SECRET",
-    "ACCESS_TOKEN_SECRET",
-    "REFRESH_TOKEN_EXPIRES_IN",
-    "ACCESS_TOKEN_EXPIRES_IN",
+    "TOKEN_SECRET",
+    "TOKEN_EXPIRY",
   ];
 
   required.forEach((key) => {
@@ -28,10 +26,8 @@ export const ORIGIN = process.env.ORIGIN || "*";
 
 export const DATABASE_URL = process.env.DATABASE_URL;
 
-export const REFRESH_TOKEN_SECRET = new Uint8Array(Buffer.from(process.env.REFRESH_TOKEN_SECRET));
-export const ACCESS_TOKEN_SECRET = new Uint8Array(Buffer.from(process.env.ACCESS_TOKEN_SECRET));
-export const REFRESH_TOKEN_EXPIRES_IN = parseInt(process.env.REFRESH_TOKEN_EXPIRES_IN);
-export const ACCESS_TOKEN_EXPIRES_IN = parseInt(process.env.ACCESS_TOKEN_EXPIRES_IN);
+export const TOKEN_SECRET = new Uint8Array(Buffer.from(process.env.TOKEN_SECRET));
+export const TOKEN_EXPIRY = parseInt(process.env.TOKEN_EXPIRY);
 
 export const ORDER_DATE = process.env.ORDER_DATE || "2022/04/01";
 

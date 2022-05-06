@@ -4,10 +4,8 @@ declare namespace NodeJS {
     PORT: string;
     ORIGIN: string;
     DATABASE_URL: string;
-    REFRESH_TOKEN_SECRET: string;
-    ACCESS_TOKEN_SECRET: string;
-    REFRESH_TOKEN_EXPIRES_IN: string;
-    ACCESS_TOKEN_EXPIRES_IN: string;
+    TOKEN_SECRET: string;
+    TOKEN_EXPIRY: string;
     SP_ADMIN_NAME: string;
     SP_ADMIN_PASSWORD: string;
     SP_ADMIN_EMAIL: string;

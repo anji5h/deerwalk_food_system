@@ -13,7 +13,6 @@ app.use(
     origin: ORIGIN,
     allowedHeaders: ["Content-Type", "Authorization", "Accept"],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
   })
 );
 //body parser

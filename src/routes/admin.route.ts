@@ -14,7 +14,7 @@ const router = express.Router();
 // router.get("/user/get");
 router.post("/user/create", verifyRole, AddUserController);
 //food route
-router.get("/food/fetch", verifyCanteenAdmin, FetchFoodController);
+router.get("/food/fetch", FetchFoodController);
 router.post("/food/create", verifyCanteenAdmin, AddFoodController);
 //food category route
 router.post("/food/category/create", verifyCanteenAdmin, AddItemCategoryController);
